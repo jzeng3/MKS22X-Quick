@@ -4,10 +4,26 @@ import java.io.*;
 public class Quick{
   public static void main(String[] args){
     //int[] ary = {1,5,8,4,9,2,7,10,3};
-    int[] ary = {999,999,999,4,1,0,3,2,999,999,999};
-    System.out.println(partition(ary, 0, ary.length - 1));
+    // int[] ary = {999,999,999,4,1,0,3,2,999,999,999};
+    // System.out.println(partition(ary, 0, ary.length - 1));
+    int[]ary = { 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
+    System.out.println(quickselect( ary , 0 )) ; // would return 0
+    System.out.println(quickselect( ary , 1 )) ; // would return 2
+    System.out.println(quickselect( ary , 2 )) ; // would return 5
+    System.out.println(quickselect( ary , 3 )) ; // would return 10
+    System.out.println(quickselect( ary , 4 )) ; // would return 15
+    System.out.println(quickselect( ary , 5 )) ; // would return 23
   }
-
+  /*return the value that is the kth smallest value of the array.
+   */
+   public static int quickselect(int[] data, int k){
+      for (int i = 0; i < data.length; i++){
+      if (k == partition(data, 0, data.length - 1)){
+          return data[0];
+        }
+      }
+      return -1;
+  }
   /*Choose a random pivot element between the start and end index inclusive,
   Then modify the array such that:
   *1. Only the indices from start to end inclusive are considered in range
@@ -18,10 +34,10 @@ public class Quick{
   *@return the index of the final position of the pivot element.
   */
   public static int partition(int[] data, int start, int end){
-    System.out.println(Arrays.toString(data));
+  //  System.out.println(Arrays.toString(data));
     Random rand = new Random();
     int pivot = rand.nextInt(data.length - 1) + 1;
-    System.out.println("pivot: "+data[pivot]);
+  //  System.out.println("pivot: "+data[pivot]);
     int s = start;
     int s_add = 1; // Where to add from
     int e = end;
@@ -51,9 +67,9 @@ public class Quick{
       }
 
     }
-      System.out.println(Arrays.toString(data));
+  /*  System.out.println(Arrays.toString(data));
     System.out.println("s: "+ s);
-    System.out.println("e: "+ e);
+    System.out.println("e: "+ e);*/
 
     // find where the pivot element belongs and return the index
     int index = 0;
