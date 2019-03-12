@@ -3,9 +3,7 @@ import java.io.*;
 
 public class Quick{
   public static void main(String[] args){
-    //int[] ary = {1,5,8,4,9,2,7,10,3};
-    // int[] ary = {999,999,999,4,1,0,3,2,999,999,999};
-    // System.out.println(partition(ary, 0, ary.length - 1));
+    
     int[]ary = { 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
     System.out.println(Arrays.toString(ary));
     for (int i = 0; i < ary.length; i++){
@@ -13,7 +11,7 @@ public class Quick{
     }
     System.out.println("\n------------------------------------------\n");
 
-    int[] ary1 = {999,999,999,4,1,0,0,0,0,3,2,999,999,999}; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
+    int[] ary1 = {-999,999,999,4,1,0,0,0,0,3,2,999,-999,999}; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
     System.out.println(Arrays.toString(ary1));
     for (int i = 0; i < ary1.length; i++){
       System.out.println("value of "+i+" smallest element: "+quickselect( ary1 , i ));
@@ -26,15 +24,23 @@ public class Quick{
       int arySize = i;
       //int arySize = r.nextInt(50) + 1;
       int[] aryRandom = new int[arySize];
+      int[] aryRandomCopy = new int[arySize];
       for (int j = 0; j < aryRandom.length; j++){
-        aryRandom[j] = r.nextInt(1000);
+        int nextElement = r.nextInt(1000);
+        aryRandom[j] = nextElement;
+        aryRandomCopy[j] = nextElement;
       }
       System.out.println("SIZE: "+ aryRandom.length + "\n" +Arrays.toString(aryRandom));
+      Arrays.sort(aryRandomCopy);
+      System.out.println("SORTED: "+Arrays.toString(aryRandomCopy));
       for (int k = 0; k < aryRandom.length; k++){
-        System.out.println("value of "+k+" smallest element: "+quickselect( aryRandom , k ));
+        int element = quickselect( aryRandom , k );
+        if (aryRandomCopy[k] != element){
+          System.out.println("INCORRECT VALUE FOR "+k+" SMALLEST ELEMENT: "+
+                              aryRandomCopy[k]+" VS "+element);
+        }
       }
-      Arrays.sort(aryRandom);
-      System.out.println("SORTED: "+Arrays.toString(aryRandom));
+      System.out.println("PASSED QUICKSELECT FOR EVERY ELEMENT!");
       System.out.println("\n------------------------------------------\n");
     }
   }
