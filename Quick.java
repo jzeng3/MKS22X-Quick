@@ -3,8 +3,8 @@ import java.io.*;
 
 public class Quick{
   public static void main(String[] args){
-    
-    int[]ary = { 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
+
+    int[]ary = {0,0,0,0,0,0,0};//{ 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
     System.out.println(Arrays.toString(ary));
     for (int i = 0; i < ary.length; i++){
       System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
@@ -30,9 +30,10 @@ public class Quick{
         aryRandom[j] = nextElement;
         aryRandomCopy[j] = nextElement;
       }
-      System.out.println("SIZE: "+ aryRandom.length + "\n" +Arrays.toString(aryRandom));
+      System.out.println("Size: "+aryRandom.length);
+    //  System.out.println("SIZE: "+ aryRandom.length + "\n" +Arrays.toString(aryRandom));
       Arrays.sort(aryRandomCopy);
-      System.out.println("SORTED: "+Arrays.toString(aryRandomCopy));
+    //  System.out.println("SORTED: "+Arrays.toString(aryRandomCopy));
       for (int k = 0; k < aryRandom.length; k++){
         int element = quickselect( aryRandom , k );
         if (aryRandomCopy[k] != element){
@@ -50,16 +51,67 @@ public class Quick{
     int tries = 5000;
     for (int i = 0; i < tries; i++){
       int index = partition(data, 0, data.length - 1);
-      int numPivots = pivotNum(data, data[0]);
+      int numPivots = pivotNum(data, data[index]);
       // System.out.println("index: "+index);
       // check if element is at desired index, otherwise call partition again
       if ( (k > index - numPivots && k <= index) ){
-        return data[0];
+        return data[index];
       }
     }
     return -1; // should not reach this, but written in to compile
 
   }
+
+  private int partitionDutch(int[] data,int lo, int hi){
+    int pivot = lo;
+    int s = 0;
+    int s_add = 1; // Where to add from
+    int e = data.length-1;
+    // base case: if array is size 1, just return 0
+    if (data.length <= 1){
+      return 0;
+    }
+    // move pivot to the beginning of the array
+    if (s == 0){
+      int temp = data[0];
+      data[0] = data[pivot];
+      data[pivot] = temp;
+      s = 1;
+    }
+
+    while(s < e && s < data.length && e >= 1){
+      // if current element is greater than pivot element, move element to the right end
+      if (data[s] > data[0]){
+        int temp1 = data[e];
+        data[e] = data[s];
+        data[s] = temp1;
+        e--;
+      }
+      // if current element is less than pivot element, move element to the left end
+      else if (data[s] <= data[0]){
+        int temp2 = data[s_add];
+        data[s_add] = data[s];
+        data[s] = temp2;
+        s++;
+        s_add++;
+
+      }
+    }
+
+      // find where the pivot element belongs and return the index
+      int index = 0;
+      if (data[0] < data[s]){
+        index = s - 1;
+      }
+      if (data[0] >= data[s]){
+        index = s;
+      }
+      int temp3 = data[index];
+      data[index] = data[0];
+      data[0] = temp3;
+      return index;
+
+}
   /*Choose a random pivot element between the start and end index inclusive,
   Then modify the array such that:
   *1. Only the indices from start to end inclusive are considered in range
@@ -114,6 +166,9 @@ public class Quick{
     if (data[0] >= data[s]){
       index = s;
     }
+    int temp3 = data[index];
+    data[index] = data[0];
+    data[0] = temp3;
     return index;
   }
 
