@@ -7,39 +7,51 @@ public class Quick{
     // int[] ary = {999,999,999,4,1,0,3,2,999,999,999};
     // System.out.println(partition(ary, 0, ary.length - 1));
     int[]ary = { 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
-    /*System.out.println(quickselect( ary , 0 )) ; // would return 0
-    System.out.println(quickselect( ary , 1 )) ; // would return 2
-    System.out.println(quickselect( ary , 2 )) ; // would return 5
-    System.out.println(quickselect( ary , 3 )) ; // would return 10
-    System.out.println(quickselect( ary , 4 )) ; // would return 15
-    System.out.println(quickselect( ary , 5 )) ; // would return 23
-    */
-     int[] ary1 = {0,0,999,0}; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
-    // System.out.println(partition(ary1, 0, ary1.length -1));
-     System.out.println(quickselect( ary1 , 0 )) ; // would return 0
-    /* System.out.println(quickselect( ary1 , 1 )) ; // would return 0
-     System.out.println(quickselect( ary1 , 2 )) ; // would return 0
-     System.out.println(quickselect( ary1 , 3 )) ; // would return 0
-     System.out.println(quickselect( ary1 , 4 )) ; // would return 1
-     System.out.println(quickselect( ary1 , 5 )) ; // would return 2
-*/
+    System.out.println(Arrays.toString(ary));
+    for (int i = 0; i < ary.length; i++){
+      System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
+    }
+    System.out.println("\n------------------------------------------\n");
 
+    int[] ary1 = {999,999,999,4,1,0,0,0,0,3,2,999,999,999}; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
+    System.out.println(Arrays.toString(ary1));
+    for (int i = 0; i < ary1.length; i++){
+      System.out.println("value of "+i+" smallest element: "+quickselect( ary1 , i ));
+    }
+    System.out.println("\n------------------------------------------\n");
+
+    // try on arrays from sizes 1 to 100, inclusive
+    Random r = new Random();
+    for (int i = 1; i < 101; i++){
+      int arySize = i;
+      //int arySize = r.nextInt(50) + 1;
+      int[] aryRandom = new int[arySize];
+      for (int j = 0; j < aryRandom.length; j++){
+        aryRandom[j] = r.nextInt(1000);
+      }
+      System.out.println("SIZE: "+ aryRandom.length + "\n" +Arrays.toString(aryRandom));
+      for (int k = 0; k < aryRandom.length; k++){
+        System.out.println("value of "+k+" smallest element: "+quickselect( aryRandom , k ));
+      }
+      Arrays.sort(aryRandom);
+      System.out.println("SORTED: "+Arrays.toString(aryRandom));
+      System.out.println("\n------------------------------------------\n");
+    }
   }
   /*return the value that is the kth smallest value of the array.
-   */
-   public static int quickselect(int[] data, int k){
-     int tries = 5000;
-     for (int i = 0; i < tries; i++){
-     int index = partition(data, 0, data.length - 1);
-     int numPivots = pivotNum(data, data[0]);
-     System.out.println("index: "+index);
-     // check if element is at desired index, otherwise call partition again
+  */
+  public static int quickselect(int[] data, int k){
+    int tries = 5000;
+    for (int i = 0; i < tries; i++){
+      int index = partition(data, 0, data.length - 1);
+      int numPivots = pivotNum(data, data[0]);
+      // System.out.println("index: "+index);
+      // check if element is at desired index, otherwise call partition again
       if ( (k > index - numPivots && k <= index) ){
-        System.out.println("index == k: "+index+" == " + k);
-          return data[0];
-        }
+        return data[0];
       }
-      return -1;
+    }
+    return -1; // should not reach this, but written in to compile
 
   }
   /*Choose a random pivot element between the start and end index inclusive,
@@ -54,10 +66,13 @@ public class Quick{
   public static int partition(int[] data, int start, int end){
     Random rand = new Random();
     int pivot = rand.nextInt(data.length);
-   System.out.println("pivot index, pivot value: "+pivot+": "+data[pivot]);
     int s = start;
     int s_add = 1; // Where to add from
     int e = end;
+    // base case: if array is size 1, just return 0
+    if (data.length <= 1){
+      return 0;
+    }
     // move pivot to the beginning of the array
     if (start == 0){
       int temp = data[0];
@@ -84,7 +99,7 @@ public class Quick{
 
       }
     }
-    System.out.println(Arrays.toString(data));
+    //   System.out.println(Arrays.toString(data));
     // find where the pivot element belongs and return the index
     int index = 0;
     if (data[0] < data[s]){
@@ -96,6 +111,7 @@ public class Quick{
     return index;
   }
 
+  // find number of occurrences of the pivot value in the array
   private static int pivotNum(int[] data, int pivotVal){
     int pivotNums = 0;
     for (int i = 0; i < data.length; i++){
