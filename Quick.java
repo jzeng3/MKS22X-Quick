@@ -7,22 +7,40 @@ public class Quick{
     // int[] ary = {999,999,999,4,1,0,3,2,999,999,999};
     // System.out.println(partition(ary, 0, ary.length - 1));
     int[]ary = { 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
-    System.out.println(quickselect( ary , 0 )) ; // would return 0
+    /*System.out.println(quickselect( ary , 0 )) ; // would return 0
     System.out.println(quickselect( ary , 1 )) ; // would return 2
     System.out.println(quickselect( ary , 2 )) ; // would return 5
     System.out.println(quickselect( ary , 3 )) ; // would return 10
     System.out.println(quickselect( ary , 4 )) ; // would return 15
     System.out.println(quickselect( ary , 5 )) ; // would return 23
+    */
+     int[] ary1 = {0,0,999,0}; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
+    // System.out.println(partition(ary1, 0, ary1.length -1));
+     System.out.println(quickselect( ary1 , 0 )) ; // would return 0
+    /* System.out.println(quickselect( ary1 , 1 )) ; // would return 0
+     System.out.println(quickselect( ary1 , 2 )) ; // would return 0
+     System.out.println(quickselect( ary1 , 3 )) ; // would return 0
+     System.out.println(quickselect( ary1 , 4 )) ; // would return 1
+     System.out.println(quickselect( ary1 , 5 )) ; // would return 2
+*/
+
   }
   /*return the value that is the kth smallest value of the array.
    */
    public static int quickselect(int[] data, int k){
-      for (int i = 0; i < data.length; i++){
-      if (k == partition(data, 0, data.length - 1)){
+     int tries = 5000;
+     for (int i = 0; i < tries; i++){
+     int index = partition(data, 0, data.length - 1);
+     int numPivots = pivotNum(data, data[0]);
+     System.out.println("index: "+index);
+     // check if element is at desired index, otherwise call partition again
+      if ( (k > index - numPivots && k <= index) ){
+        System.out.println("index == k: "+index+" == " + k);
           return data[0];
         }
       }
       return -1;
+
   }
   /*Choose a random pivot element between the start and end index inclusive,
   Then modify the array such that:
@@ -34,10 +52,9 @@ public class Quick{
   *@return the index of the final position of the pivot element.
   */
   public static int partition(int[] data, int start, int end){
-  //  System.out.println(Arrays.toString(data));
     Random rand = new Random();
-    int pivot = rand.nextInt(data.length - 1) + 1;
-  //  System.out.println("pivot: "+data[pivot]);
+    int pivot = rand.nextInt(data.length);
+   System.out.println("pivot index, pivot value: "+pivot+": "+data[pivot]);
     int s = start;
     int s_add = 1; // Where to add from
     int e = end;
@@ -64,13 +81,10 @@ public class Quick{
         data[s] = temp2;
         s++;
         s_add++;
+
       }
-
     }
-  /*  System.out.println(Arrays.toString(data));
-    System.out.println("s: "+ s);
-    System.out.println("e: "+ e);*/
-
+    System.out.println(Arrays.toString(data));
     // find where the pivot element belongs and return the index
     int index = 0;
     if (data[0] < data[s]){
@@ -80,6 +94,16 @@ public class Quick{
       index = s;
     }
     return index;
+  }
+
+  private static int pivotNum(int[] data, int pivotVal){
+    int pivotNums = 0;
+    for (int i = 0; i < data.length; i++){
+      if (pivotVal == data[i]){
+        pivotNums++;
+      }
+    }
+    return pivotNums;
   }
 
 
