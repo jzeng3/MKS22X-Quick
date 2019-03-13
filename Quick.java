@@ -7,24 +7,24 @@ public class Quick{
     int[]ary = {1,1,0,0,1,0,1,0,0,1,0,1,0,10,1,0,0,0,0,0,0,0, 1,1,0,0,1,0,1,0,0,1,0,1,0,1,1,0,0,1,0,1,0,0,1}; //{ 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
     System.out.println(Arrays.toString(ary));
     for (int i = 0; i < ary.length; i++){
-      System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
+      //System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
     }
     System.out.println("\n------------------------------------------\n");
     for (int i = 0; i < ary.length; i++){
-      System.out.println("value of "+i+" smallest element: "+quickselectDutch( ary , i ));
+    //  System.out.println("value of "+i+" smallest element: "+quickselectDutch( ary , i ));
     }
     System.out.println("\n------------------------------------------\n");
 
     int[] ary1 = {-999,999,999,4,1,0,0,0,0,3,2,999,-999,999}; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
     System.out.println(Arrays.toString(ary1));
     for (int i = 0; i < ary1.length; i++){
-      System.out.println("value of "+i+" smallest element: "+quickselect( ary1 , i ));
+    //  System.out.println("value of "+i+" smallest element: "+quickselect( ary1 , i ));
     }
     System.out.println("\n------------------------------------------\n");
 
     // try on arrays from sizes 1 to 100, inclusive
     Random r = new Random();
-    for (int i = 1; i < 2; i++){
+    for (int i = 10000; i < 10001; i++){
       int arySize = i;
       //int arySize = r.nextInt(50) + 1;
       int[] aryRandom = new int[arySize];
@@ -48,7 +48,8 @@ public class Quick{
       System.out.println("PASSED QUICKSELECT FOR EVERY ELEMENT!");
       System.out.println("\n------------------------------------------\n");
     }
-    int[] ary2 = {9, -3, 5, 2, 6, 8, -6, 1, 3};
+    //int[] ary2 = {9, -3, 5, 2, 6, 8, -6, 1, 3};
+    int[] ary2 = {0,0,0,0,0,1,0,0,0,0};
     partitionDutch(ary2, 0, ary2.length -1);
     System.out.println(Arrays.toString(ary2));
   }
@@ -57,7 +58,7 @@ public class Quick{
   /*return the value that is the kth smallest value of the array.
   */
   public static int quickselect(int[] data, int k){
-    int tries = 5000;
+    int tries = data.length * 500;
     for (int i = 0; i < tries; i++){
       int index = partition(data, 0, data.length - 1);
       int numPivots = pivotNum(data, data[index]);
@@ -169,6 +170,7 @@ public class Quick{
       int temp3 = data[index];
       data[index] = data[0];
       data[0] = temp3;
+      System.out.println("location of pivot element "+data[index]+": data["+index+"]");
       return index;
 }
   /*Choose a random pivot element between the start and end index inclusive,
