@@ -4,10 +4,14 @@ import java.io.*;
 public class Quick{
   public static void main(String[] args){
 
-    int[]ary = { 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
+    int[]ary = {1,1,0,0,1,0,1,0,0,1,0,1,0,10,1,0,0,0,0,0,0,0, 1,1,0,0,1,0,1,0,0,1,0,1,0,1,1,0,0,1,0,1,0,0,1}; //{ 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
     System.out.println(Arrays.toString(ary));
     for (int i = 0; i < ary.length; i++){
       System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
+    }
+    System.out.println("\n------------------------------------------\n");
+    for (int i = 0; i < ary.length; i++){
+      System.out.println("value of "+i+" smallest element: "+quickselectDutch( ary , i ));
     }
     System.out.println("\n------------------------------------------\n");
 
@@ -48,6 +52,8 @@ public class Quick{
     partitionDutch(ary2, 0, ary2.length -1);
     System.out.println(Arrays.toString(ary2));
   }
+
+
   /*return the value that is the kth smallest value of the array.
   */
   public static int quickselect(int[] data, int k){
@@ -64,12 +70,27 @@ public class Quick{
     return -1; // should not reach this, but written in to compile
 
   }
+  public static int quickselectDutch(int[] data, int k){
+    int tries = 5000;
+    for (int i = 0; i < tries; i++){
+      int index = partitionDutch(data, 0, data.length - 1);
+      int numPivots = pivotNum(data, data[index]);
+      // System.out.println("index: "+index);
+      // check if element is at desired index, otherwise call partition again
+      if ( (k > index - numPivots && k <= index) ){
+        return data[index];
+      }
+    }
+    return -1; // should not reach this, but written in to compile
+
+  }
+
 /*  a - When choosing a pivot, use the median value of the lo,hi, and middle elements.
     b - When a data element is equal to the pivot, make a 50% chance that you swap it to the other
     */
   private static int partitionDutch(int[] data,int lo, int hi){
     int mid = (lo + hi) / 2; // middle element index
-    System.out.println("middle index: "+mid);
+    //System.out.println("middle index: "+mid);
     int pivot = 0;
     // set pivot as the median value of lo,hi,mid elements
     if (data[lo] > data[hi] && data[lo] < data[mid]
@@ -84,7 +105,7 @@ public class Quick{
     ||  data[hi] < data[lo] && data[hi] > data[mid]){
       pivot = hi;
     }
-    System.out.println("pivot index: "+pivot+": "+data[pivot]);
+    //System.out.println("pivot index: "+pivot+": "+data[pivot]);
 
     int s = 0;
     int s_add = 1; // Where to add from
