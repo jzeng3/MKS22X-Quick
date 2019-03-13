@@ -4,14 +4,19 @@ import java.io.*;
 public class Quick{
   public static void main(String[] args){
 
-    int[]ary = {1,1,0,0,1,0,1,0,0,1,0,1,0,10,1,0,0,0,0,0,0,0, 1,1,0,0,1,0,1,0,0,1,0,1,0,1,1,0,0,1,0,1,0,0,1}; //{ 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
+    int[]ary = {5,4,3,1,2,7};
+    //{0,1,0,1,2,1,0,1,0,0,1,0,5,6,3,8,9,9,9,3,3};
+    //{5,4,3,1,2,7};
+    //{0,1,0,1,2,1,0,1};
+    //{1,1,0,0,1,0,1,0,0,1,0,1,0,10,1,0,0,0,0,0,0,0, 1,1,0,0,1,0,1,0,0,1,0,1,0,1,1,0,0,1,0,1,0,0,1};
+    //{ 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
     System.out.println(Arrays.toString(ary));
     for (int i = 0; i < ary.length; i++){
-      //System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
+      // System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
     }
     System.out.println("\n------------------------------------------\n");
     for (int i = 0; i < ary.length; i++){
-    //  System.out.println("value of "+i+" smallest element: "+quickselectDutch( ary , i ));
+      System.out.println("QUICKSELECT_DUTCH: value of "+i+" smallest element: "+quickselectDutch( ary , i ));
     }
     System.out.println("\n------------------------------------------\n");
 
@@ -61,11 +66,12 @@ public class Quick{
     int tries = data.length * 500;
     for (int i = 0; i < tries; i++){
       int index = partition(data, 0, data.length - 1);
-      System.out.println(Arrays.toString(data));
+    //  System.out.println(Arrays.toString(data));
       int numPivots = pivotNum(data, data[index]);
       // System.out.println("index: "+index);
       // check if element is at desired index, otherwise call partition again
-      if ( (k > index - numPivots && k <= index) ){
+      if ( (k > index - numPivots && k <= index)
+      ){
         return data[index];
       }
     }
@@ -77,6 +83,7 @@ public class Quick{
     for (int i = 0; i < tries; i++){
       int index = partitionDutch(data, 0, data.length - 1);
       int numPivots = pivotNum(data, data[index]);
+      System.out.println(Arrays.toString(data));
       // System.out.println("index: "+index);
       // check if element is at desired index, otherwise call partition again
       if ( (k > index - numPivots && k <= index) ){
@@ -161,7 +168,7 @@ public class Quick{
     }
 
       // find where the pivot element belongs and return the index
-      int index = 0;
+    /*  int index = 0;
       if (data[0] < data[s]){
         index = s - 1;
       }
@@ -170,9 +177,9 @@ public class Quick{
       }
       int temp3 = data[index];
       data[index] = data[0];
-      data[0] = temp3;
-      System.out.println("location of pivot element "+data[index]+": data["+index+"]");
-      return index;
+      data[0] = temp3;*/
+    //  System.out.println("location of pivot element "+data[index]+": data["+index+"]");
+      return e;
 }
   /*Choose a random pivot element between the start and end index inclusive,
   Then modify the array such that:
