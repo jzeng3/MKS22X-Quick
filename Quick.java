@@ -18,13 +18,13 @@ public class Quick{
     int[] ary1 = {-999,999,999,4,1,0,0,0,0,3,2,999,-999,999}; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
     System.out.println(Arrays.toString(ary1));
     for (int i = 0; i < ary1.length; i++){
-    //  System.out.println("value of "+i+" smallest element: "+quickselect( ary1 , i ));
+      System.out.println("value of "+i+" smallest element: "+quickselect( ary1 , i ));
     }
     System.out.println("\n------------------------------------------\n");
 
     // try on arrays from sizes 1 to 100, inclusive
     Random r = new Random();
-    for (int i = 10000; i < 10001; i++){
+    for (int i = 1; i < 2; i++){
       int arySize = i;
       //int arySize = r.nextInt(50) + 1;
       int[] aryRandom = new int[arySize];
@@ -61,6 +61,7 @@ public class Quick{
     int tries = data.length * 500;
     for (int i = 0; i < tries; i++){
       int index = partition(data, 0, data.length - 1);
+      System.out.println(Arrays.toString(data));
       int numPivots = pivotNum(data, data[index]);
       // System.out.println("index: "+index);
       // check if element is at desired index, otherwise call partition again
@@ -208,14 +209,9 @@ public class Quick{
         data[s] = temp1;
         e--;
       }
-      // if current element is less than pivot element, move element to the left end
+      // if current element is less than pivot element, move the start to the right
       else if (data[s] <= data[0]){
-        int temp2 = data[s_add];
-        data[s_add] = data[s];
-        data[s] = temp2;
         s++;
-        s_add++;
-
       }
     }
     //   System.out.println(Arrays.toString(data));
