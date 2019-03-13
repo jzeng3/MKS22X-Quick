@@ -4,7 +4,7 @@ import java.io.*;
 public class Quick{
   public static void main(String[] args){
 
-    int[]ary = {0,0,0,0,0,0,0};//{ 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
+    int[]ary = { 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
     System.out.println(Arrays.toString(ary));
     for (int i = 0; i < ary.length; i++){
       System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
@@ -20,7 +20,7 @@ public class Quick{
 
     // try on arrays from sizes 1 to 100, inclusive
     Random r = new Random();
-    for (int i = 1; i < 101; i++){
+    for (int i = 1; i < 2; i++){
       int arySize = i;
       //int arySize = r.nextInt(50) + 1;
       int[] aryRandom = new int[arySize];
@@ -44,6 +44,9 @@ public class Quick{
       System.out.println("PASSED QUICKSELECT FOR EVERY ELEMENT!");
       System.out.println("\n------------------------------------------\n");
     }
+    int[] ary2 = {9, -3, 5, 2, 6, 8, -6, 1, 3};
+    partitionDutch(ary2, 0, ary2.length -1);
+    System.out.println(Arrays.toString(ary2));
   }
   /*return the value that is the kth smallest value of the array.
   */
@@ -61,9 +64,27 @@ public class Quick{
     return -1; // should not reach this, but written in to compile
 
   }
-
-  private int partitionDutch(int[] data,int lo, int hi){
-    int pivot = lo;
+/*  a - When choosing a pivot, use the median value of the lo,hi, and middle elements.
+    b - When a data element is equal to the pivot, make a 50% chance that you swap it to the other
+    */
+  private static int partitionDutch(int[] data,int lo, int hi){
+    int mid = (lo + hi) / 2; // middle element index
+    System.out.println("middle index: "+mid);
+    int pivot = 0;
+    // set pivot as the median value of lo,hi,mid elements
+    if (data[lo] > data[hi] && data[lo] < data[mid]
+    ||  data[lo] < data[hi] && data[lo] > data[mid]){
+      pivot = lo;
+    }
+    if (data[mid] > data[hi] && data[mid] < data[lo]
+    || data[mid] < data[hi] && data[mid] > data[lo]){
+      pivot = mid;
+    }
+    if (data[hi] > data[lo] && data[hi] < data[mid]
+    ||  data[hi] < data[lo] && data[hi] > data[mid]){
+      pivot = hi;
+    }
+    System.out.println("pivot index: "+pivot+": "+data[pivot]);
     int s = 0;
     int s_add = 1; // Where to add from
     int e = data.length-1;
@@ -110,7 +131,6 @@ public class Quick{
       data[index] = data[0];
       data[0] = temp3;
       return index;
-
 }
   /*Choose a random pivot element between the start and end index inclusive,
   Then modify the array such that:
