@@ -85,6 +85,7 @@ public class Quick{
       pivot = hi;
     }
     System.out.println("pivot index: "+pivot+": "+data[pivot]);
+
     int s = 0;
     int s_add = 1; // Where to add from
     int e = data.length-1;
@@ -108,8 +109,25 @@ public class Quick{
         data[s] = temp1;
         e--;
       }
+      // 50% of putting to one side or another if element is equal to pivot
+      else if (data[s] == data[0]){
+        Random rand = new Random();
+        if (rand.nextInt(2) == 0){
+          int temp1 = data[e];
+          data[e] = data[s];
+          data[s] = temp1;
+          e--;
+        }
+        else{
+          int temp2 = data[s_add];
+          data[s_add] = data[s];
+          data[s] = temp2;
+          s++;
+          s_add++;
+        }
+      }
       // if current element is less than pivot element, move element to the left end
-      else if (data[s] <= data[0]){
+      else if (data[s] < data[0]){
         int temp2 = data[s_add];
         data[s_add] = data[s];
         data[s] = temp2;
