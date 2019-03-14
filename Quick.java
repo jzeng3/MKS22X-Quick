@@ -65,13 +65,14 @@ public class Quick{
 
      return;
    }
+
   /*return the value that is the kth smallest value of the array.
   */
   public static int quickselect(int[] data, int k){
       int startIndex = 0;
       int endIndex = data.length - 1;
       int index = partition(data, startIndex, endIndex);
-
+      //System.out.println(Arrays.toString(data));
       // check if element is at desired index, otherwise call partition again
       while (index != k){
         // if index is to the left of desired element, partition the right side of the array
@@ -84,7 +85,7 @@ public class Quick{
           index = partition(data, startIndex, endIndex);
         }
       }
-
+    //  System.out.println(Arrays.toString(data));
     return data[index];
 
   }
@@ -179,8 +180,8 @@ public class Quick{
   */
   public static int partition(int[] data, int start, int end){
     Random rand = new Random();
-    int pivot = rand.nextInt(data.length);
-  //  System.out.println("pivot: "+pivot);
+    int pivot = Math.abs(rand.nextInt()) % (end - start + 1) + start;
+    System.out.println("start, end, pivot: "+start+" "+end+" "+pivot);
     int s = start;
     int e = end;
 
