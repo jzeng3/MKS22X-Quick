@@ -2,7 +2,41 @@ import java.util.*;
 import java.io.*;
 
 public class Quick{
-  public static void main(String[] args){
+  public static void main(String[]args){
+  System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
+  int[]MAX_LIST = {1000000000,500,10};
+  for(int MAX : MAX_LIST){
+    for(int size = 31250; size < 2000001; size*=2){
+      long qtime=0;
+      long btime=0;
+      //average of 5 sorts.
+      for(int trial = 0 ; trial <=5; trial++){
+        int []data1 = new int[size];
+        int []data2 = new int[size];
+        for(int i = 0; i < data1.length; i++){
+          data1[i] = (int)(Math.random()*MAX);
+          data2[i] = data1[i];
+        }
+        long t1,t2;
+        t1 = System.currentTimeMillis();
+        Quick.quicksort(data2);
+        t2 = System.currentTimeMillis();
+        qtime += t2 - t1;
+        t1 = System.currentTimeMillis();
+        Arrays.sort(data1);
+        t2 = System.currentTimeMillis();
+        btime+= t2 - t1;
+        if(!Arrays.equals(data1,data2)){
+          System.out.println("FAIL TO SORT!");
+          System.exit(0);
+        }
+      }
+      System.out.println(size +"\t\t"+MAX+"\t"+1.0*qtime/btime);
+    }
+    System.out.println();
+  }
+}
+  /*public static void main(String[] args){
 
     int[]ary = {5,4,3,1,2,7};
     //{0,1,0,1,2,1,0,1,0,0,1,0,5,6,3,8,9,9,9,3,3};
@@ -31,10 +65,10 @@ public class Quick{
     for (int i = 0; i < ary1.length; i++){
       System.out.println("value of "+i+" smallest element: "+quickselect( ary1 , i ));
     }*/
-    System.out.println("\n------------------------------------------\n");
+  //  System.out.println("\n------------------------------------------\n");
 
     // try on arrays from sizes 1 to 100, inclusive
-    Random r = new Random();
+  /*  Random r = new Random();
     for (int i = 1; i < 2; i++){
       int arySize = i;
       //int arySize = r.nextInt(50) + 1;
@@ -80,15 +114,15 @@ public class Quick{
      if (lo >= hi){
        return; // end function if lo is greater than high
      }
-     System.out.println("DOING PARTITION DUTCH NOW! "+lo+", "+hi);
+  //   System.out.println("DOING PARTITION DUTCH NOW! "+lo+", "+hi);
      // otherwise record the pivot index
      int pivot = partitionDutch(data,lo,hi);
-     System.out.println("pivot: "+pivot);
+  //   System.out.println("pivot: "+pivot);
      // recursively call quicksortH on left and right sides of array
      quicksortH(data, lo, pivot -1);
-     System.out.println("after left sort: "+Arrays.toString(data));
+    // System.out.println("after left sort: "+Arrays.toString(data));
      quicksortH(data,pivot+1,hi);
-     System.out.println("after right sort: "+Arrays.toString(data));
+    // System.out.println("after right sort: "+Arrays.toString(data));
    }
   /*return the value that is the kth smallest value of the array.
   */
@@ -125,7 +159,7 @@ public class Quick{
   public static int partitionDutch(int[] data,int lo, int hi){
   //  System.out.println("partitionDutch "+Arrays.toString(data)+", "+lo+", "+hi);
     int mid = (lo + hi) / 2; // middle element index
-    System.out.println("middle index: "+mid);
+  //  System.out.println("middle index: "+mid);
     if (hi - lo == 1){
       if (data[lo] > data[hi]){
         int temp4 = data[hi];
@@ -148,7 +182,7 @@ public class Quick{
       pivot = hi;
     }
 
-    System.out.println("pivot, inside partitionDutch: "+pivot);
+  //  System.out.println("pivot, inside partitionDutch: "+pivot);
     int s = lo;
     int e = hi;
 
@@ -193,7 +227,7 @@ public class Quick{
          e--;
        }
        else{
-         System.out.println("Something is wrong: " + willChange);
+        // System.out.println("Something is wrong: " + willChange);
        }
      }
     }
@@ -208,8 +242,8 @@ public class Quick{
     int temp3 = data[index];
     data[index] = data[lo];
     data[lo] = temp3;
-    System.out.println("AFTER PARTITION, inside partitionDutch: "+Arrays.toString(data));
-    System.out.println("index to return: "+index);
+    //System.out.println("AFTER PARTITION, inside partitionDutch: "+Arrays.toString(data));
+  //  System.out.println("index to return: "+index);
     return index;
 }
   /*Choose a random pivot element between the start and end index inclusive,
