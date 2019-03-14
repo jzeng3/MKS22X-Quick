@@ -68,17 +68,20 @@ public class Quick{
   /*return the value that is the kth smallest value of the array.
   */
   public static int quickselect(int[] data, int k){
-
-      int index = partition(data, 0, data.length - 1);
+      int startIndex = 0;
+      int endIndex = data.length - 1;
+      int index = partition(data, startIndex, endIndex);
 
       // check if element is at desired index, otherwise call partition again
       while (index != k){
         // if index is to the left of desired element, partition the right side of the array
         if (index < k){
-          index = partition(data, index, data.length - 1);
+          startIndex = index;
+          index = partition(data, startIndex, endIndex);
         }else{
           // if index is to the right of the desired element, partition the left side of the array
-          index = partition(data, 0, index);
+          endIndex = index;
+          index = partition(data, startIndex, endIndex);
         }
       }
 
@@ -123,7 +126,7 @@ public class Quick{
       s = 1;
     }
 
-    while(s < e && s < data.length && e >= 1){
+    while(s < e){
       // if current element is greater than pivot element, move element to the right end
       if (data[s] > data[0]){
         int temp1 = data[e];
@@ -177,9 +180,10 @@ public class Quick{
   public static int partition(int[] data, int start, int end){
     Random rand = new Random();
     int pivot = rand.nextInt(data.length);
+  //  System.out.println("pivot: "+pivot);
     int s = start;
-    int s_add = start + 1; // Where to add from
     int e = end;
+
     // base case: if array is size 1, just return 0
     if (data.length <= 1){
       return 0;
@@ -188,32 +192,35 @@ public class Quick{
       int temp = data[start];
       data[start] = data[pivot];
       data[pivot] = temp;
-      s++;
-
+      s++; // update starting index
+    //  System.out.println("PIVOT AT FRONT: "+Arrays.toString(data));
     while(s < e){
       // if current element is greater than pivot element, move element to the right end
-      if (data[s] > data[0]){
+      if (data[s] > data[start]){
         int temp1 = data[e];
         data[e] = data[s];
         data[s] = temp1;
         e--;
       }
       // if current element is less than pivot element, move the start to the right
-      else if (data[s] <= data[0]){
+      else if (data[s] <= data[start]){
         s++;
       }
     }
     // find where the pivot element belongs, place it in that position, and return the index
     int index = 0;
-    if (data[0] < data[s]){
+    if (data[start] <= data[s]){
       index = s - 1;
     }
-    if (data[0] >= data[s]){
+    if (data[start] > data[s]){
       index = s;
     }
     int temp3 = data[index];
-    data[index] = data[0];
-    data[0] = temp3;
+    data[index] = data[start];
+    data[start] = temp3;
+  //  System.out.println("AFTER PARTITION: "+Arrays.toString(data));
+    //System.out.println("start: "+start+" end: "+end+" s: "+s+" e: "+e+" return index: "+index);
+
     return index;
   }
 
