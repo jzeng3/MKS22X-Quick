@@ -20,7 +20,13 @@ public class Quick{
 //    }
     System.out.println("\n------------------------------------------\n");
 
-    int[] ary1 = {-999,999,999,4,1,0,0,0,0,3,2,999,-999,999}; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
+    int[] ary1 = new int[100]; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
+    for (int i = 0; i < 100; i++){
+      ary1[i] = 0;
+      if (i%2==1){
+        ary1[i] = 1;
+      }
+    }
     System.out.println(Arrays.toString(ary1));
     for (int i = 0; i < ary1.length; i++){
       System.out.println("value of "+i+" smallest element: "+quickselect( ary1 , i ));
@@ -39,7 +45,7 @@ public class Quick{
         aryRandom[j] = nextElement;
         aryRandomCopy[j] = nextElement;
       }
-      System.out.println("Size: "+aryRandom.length);
+    //  System.out.println("Size: "+aryRandom.length);
     //  System.out.println("SIZE: "+ aryRandom.length + "\n" +Arrays.toString(aryRandom));
       Arrays.sort(aryRandomCopy);
     //  System.out.println("SORTED: "+Arrays.toString(aryRandomCopy));
@@ -50,9 +56,10 @@ public class Quick{
                               aryRandomCopy[k]+" VS "+element);
         }
       }
-      System.out.println("PASSED QUICKSELECT FOR EVERY ELEMENT!");
-      System.out.println("\n------------------------------------------\n");
+
+    //  System.out.println("\n------------------------------------------\n");
     }
+    System.out.println("PASSED QUICKSELECT FOR EVERY ELEMENT!");
     //int[] ary2 = {9, -3, 5, 2, 6, 8, -6, 1, 3};
     int[] ary2 = {0,0,0,0,0,1,0,0,0,0};
     partitionDutch(ary2, 0, ary2.length -1);
@@ -75,7 +82,7 @@ public class Quick{
       //System.out.println(Arrays.toString(data));
       // check if element is at desired index, otherwise call partition again
       while (index != k){
-        System.out.println("index, k: "+index+" "+k);
+      //  System.out.println("index, k: "+index+" "+k);
         // if index is to the left of desired element, partition the right side of the array
         if (index < k){
 
@@ -84,12 +91,12 @@ public class Quick{
         }else{
           // if index is to the right of the desired element, partition the left side of the array
           endIndex = index;
-          System.out.println("startIndex, endIndex: "+startIndex+" "+endIndex);
+        //  System.out.println("startIndex, endIndex: "+startIndex+" "+endIndex);
           index = partition(data, startIndex, endIndex);
         }
-        System.out.println("index now: "+index);
+      //  System.out.println("index now: "+index);
       }
-      System.out.println("INDEX AT THE END: "+index);
+    //  System.out.println("INDEX AT THE END: "+index);
     //  System.out.println(Arrays.toString(data));
     return data[index];
 
@@ -184,36 +191,25 @@ public class Quick{
   *@return the index of the final position of the pivot element.
   */
   public static int partition(int[] data, int start, int end){
-    System.out.println("START OF A PARTITION: "+Arrays.toString(data));
-    System.out.println("start, end: "+start+", "+end);
+  //  System.out.println("START OF A PARTITION: "+Arrays.toString(data));
+  //  System.out.println("start, end: "+start+", "+end);
     Random rand = new Random();
     int pivot = Math.abs(rand.nextInt()) % (end - start + 1) + start;
 
     int s = start;
     int e = end;
 
-    // base case: if array is size 1, just return 0
-    if (data.length <= 1){
-      return 0;
+    if (start == end){
+      return start; // if there's only one element, return the element
     }
-    if (end - start == 1){
 
-      System.out.println("S: "+s);
-        return start;
-    //  System.exit(0);
-    }
     // move pivot to the beginning of the array part that's being sorted
       int temp = data[start];
       data[start] = data[pivot];
       data[pivot] = temp;
       s++; // update starting index
-  System.out.println("start, end, pivot: "+s+" "+e+" "+pivot);
-    if (s >= e){
+  //System.out.println("start, end, pivot: "+s+" "+e+" "+pivot);
 
-      System.out.println("catching mistakes inside if statement: "+s+" "+e);
-      System.out.println(data[s-1]);
-       System.exit(0);
-    }
     //  System.out.println("PIVOT AT FRONT: "+Arrays.toString(data));
 
     while(s < e){
@@ -240,7 +236,7 @@ public class Quick{
     int temp3 = data[index];
     data[index] = data[start];
     data[start] = temp3;
-    System.out.println("AFTER PARTITION: "+Arrays.toString(data));
+  //  System.out.println("AFTER PARTITION: "+Arrays.toString(data));
     //System.out.println("start: "+start+" end: "+end+" s: "+s+" e: "+e+" return index: "+index);
 
     return index;
