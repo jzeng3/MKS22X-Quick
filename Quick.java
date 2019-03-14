@@ -12,12 +12,12 @@ public class Quick{
     //{ 2, 10, 15, 23, 0,  5};  //sorted :  {0,2,5,10,15,23}
     System.out.println(Arrays.toString(ary));
     for (int i = 0; i < ary.length; i++){
-      // System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
+       System.out.println("value of "+i+" smallest element: "+quickselect( ary , i ));
     }
     System.out.println("\n------------------------------------------\n");
-    for (int i = 0; i < ary.length; i++){
-      System.out.println("QUICKSELECT_DUTCH: value of "+i+" smallest element: "+quickselectDutch( ary , i ));
-    }
+//    for (int i = 0; i < ary.length; i++){
+    //  System.out.println("QUICKSELECT_DUTCH: value of "+4+" smallest element: "+quickselectDutch( ary , 4 ));
+//    }
     System.out.println("\n------------------------------------------\n");
 
     int[] ary1 = {-999,999,999,4,1,0,0,0,0,3,2,999,-999,999}; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
@@ -59,7 +59,12 @@ public class Quick{
     System.out.println(Arrays.toString(ary2));
   }
 
+  /*Modify the array to be in increasing order.
+   */
+   public static void quicksort(int[] data){
 
+     return;
+   }
   /*return the value that is the kth smallest value of the array.
   */
   public static int quickselect(int[] data, int k){
@@ -72,21 +77,6 @@ public class Quick{
       // check if element is at desired index, otherwise call partition again
       if ( (k > index - numPivots && k <= index)
       ){
-        return data[index];
-      }
-    }
-    return -1; // should not reach this, but written in to compile
-
-  }
-  public static int quickselectDutch(int[] data, int k){
-    int tries = 5000;
-    for (int i = 0; i < tries; i++){
-      int index = partitionDutch(data, 0, data.length - 1);
-      int numPivots = pivotNum(data, data[index]);
-      System.out.println(Arrays.toString(data));
-      // System.out.println("index: "+index);
-      // check if element is at desired index, otherwise call partition again
-      if ( (k > index - numPivots && k <= index) ){
         return data[index];
       }
     }
@@ -149,26 +139,18 @@ public class Quick{
           e--;
         }
         else{
-          int temp2 = data[s_add];
-          data[s_add] = data[s];
-          data[s] = temp2;
           s++;
-          s_add++;
         }
       }
       // if current element is less than pivot element, move element to the left end
       else if (data[s] < data[0]){
-        int temp2 = data[s_add];
-        data[s_add] = data[s];
-        data[s] = temp2;
         s++;
-        s_add++;
 
       }
     }
 
       // find where the pivot element belongs and return the index
-    /*  int index = 0;
+      int index = 0;
       if (data[0] < data[s]){
         index = s - 1;
       }
@@ -177,9 +159,9 @@ public class Quick{
       }
       int temp3 = data[index];
       data[index] = data[0];
-      data[0] = temp3;*/
+      data[0] = temp3;
     //  System.out.println("location of pivot element "+data[index]+": data["+index+"]");
-      return e;
+      return index;
 }
   /*Choose a random pivot element between the start and end index inclusive,
   Then modify the array such that:
@@ -194,21 +176,20 @@ public class Quick{
     Random rand = new Random();
     int pivot = rand.nextInt(data.length);
     int s = start;
-    int s_add = 1; // Where to add from
+    int s_add = start + 1; // Where to add from
     int e = end;
     // base case: if array is size 1, just return 0
     if (data.length <= 1){
       return 0;
     }
-    // move pivot to the beginning of the array
-    if (start == 0){
-      int temp = data[0];
-      data[0] = data[pivot];
+    // move pivot to the beginning of the array part that's being sorted
+      int temp = data[start];
+      data[start] = data[pivot];
       data[pivot] = temp;
-      s = 1;
-    }
+      s++;
 
-    while(s < e && s < data.length && e >= 1){
+
+    while(s < e){
       // if current element is greater than pivot element, move element to the right end
       if (data[s] > data[0]){
         int temp1 = data[e];
