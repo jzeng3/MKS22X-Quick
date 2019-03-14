@@ -62,18 +62,34 @@ public class Quick{
     System.out.println("PASSED QUICKSELECT FOR EVERY ELEMENT!");
     //int[] ary2 = {9, -3, 5, 2, 6, 8, -6, 1, 3};
     System.out.println("PARTITION DUTCH");
-    int[] ary2 = {-1,2,3,5,6,0,0,0,0,0,1,0,0,-1,2,3,4,4,4,4,4,5,0,4};
-    partitionDutch(ary2, 0, ary2.length -1);
+    int[] ary2 = {9,-3,5,2,3,8,-6,1,6};
+    //partitionDutch(ary2, 0, ary2.length -1);
     System.out.println(Arrays.toString(ary2));
+    quicksort(ary2);
+    System.out.println("SORTED: "+Arrays.toString(ary2));
   }
 
   /*Modify the array to be in increasing order.
    */
    public static void quicksort(int[] data){
-
-     return;
+     quicksortH(data,0,data.length-1);
    }
+   // quicksort helper takes lo, hi
 
+   public static void quicksortH(int[] data, int lo, int hi){
+     if (lo >= hi){
+       return; // end function if lo is greater than high
+     }
+     System.out.println("DOING PARTITION DUTCH NOW! "+lo+", "+hi);
+     // otherwise record the pivot index
+     int pivot = partitionDutch(data,lo,hi);
+     System.out.println("pivot: "+pivot);
+     // recursively call quicksortH on left and right sides of array
+     quicksortH(data, lo, pivot -1);
+     System.out.println("after left sort: "+Arrays.toString(data));
+     quicksortH(data,pivot+1,hi);
+     System.out.println("after right sort: "+Arrays.toString(data));
+   }
   /*return the value that is the kth smallest value of the array.
   */
   public static int quickselect(int[] data, int k){
@@ -107,8 +123,17 @@ public class Quick{
     b - When a data element is equal to the pivot, make a 50% chance that you swap it to the other
     */
   public static int partitionDutch(int[] data,int lo, int hi){
+  //  System.out.println("partitionDutch "+Arrays.toString(data)+", "+lo+", "+hi);
     int mid = (lo + hi) / 2; // middle element index
     System.out.println("middle index: "+mid);
+    if (hi - lo == 1){
+      if (data[lo] > data[hi]){
+        int temp4 = data[hi];
+        data[hi] = data[lo];
+        data[lo] = temp4;
+      }
+      return lo;
+    }
     int pivot = 0;
     // set pivot as the median value of lo,hi,mid elements
     if (data[lo] > data[hi] && data[lo] < data[mid]
@@ -123,7 +148,8 @@ public class Quick{
     ||  data[hi] < data[lo] && data[hi] > data[mid]){
       pivot = hi;
     }
-    System.out.println("pivot: "+pivot);
+
+    System.out.println("pivot, inside partitionDutch: "+pivot);
     int s = lo;
     int e = hi;
 
@@ -136,9 +162,8 @@ public class Quick{
       data[lo] = data[pivot];
       data[pivot] = temp;
       s++; // update loing index
-  //System.out.println("lo, hi, pivot: "+s+" "+e+" "+pivot);
+      // System.out.println("lo, hi, pivot: "+s+" "+e+" "+pivot);
 
-    //  System.out.println("PIVOT AT FRONT: "+Arrays.toString(data));
 
     while(s < e){
       Random rand = new Random();
@@ -146,17 +171,19 @@ public class Quick{
 
       // if current element is greater than pivot element, move element to the right hi
       if (data[s] > data[lo]){
+      //  System.out.println("data["+s+"]: "+data[s]);
         int temp1 = data[e];
         data[e] = data[s];
         data[s] = temp1;
         e--;
+
       }
       // if current element is less than pivot element, move the lo to the right
       else if (data[s] < data[lo]){
         s++;
       }
       else if (data[s] == data[lo]){
-        System.out.println("willChange value: "+ willChange);
+      //  System.out.println("willChange value: "+ willChange);
        if (willChange == 0){ // 50% chance of keeping element on left side
          s++;
        }
@@ -182,6 +209,7 @@ public class Quick{
     int temp3 = data[index];
     data[index] = data[lo];
     data[lo] = temp3;
+    System.out.println("AFTER PARTITION, inside partitionDutch: "+Arrays.toString(data));
     System.out.println("index to return: "+index);
     return index;
 }
