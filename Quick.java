@@ -20,8 +20,8 @@ public class Quick{
 //    }
     System.out.println("\n------------------------------------------\n");
 
-    int[] ary1 = new int[100]; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
-    for (int i = 0; i < 100; i++){
+  /*  int[] ary1 = new int[10000]; // sorted: {0,0,0,0,1,2,3,4,999,999,999,999,999,999};
+    for (int i = 0; i < 10000; i++){
       ary1[i] = 0;
       if (i%2==1){
         ary1[i] = 1;
@@ -30,7 +30,7 @@ public class Quick{
     System.out.println(Arrays.toString(ary1));
     for (int i = 0; i < ary1.length; i++){
       System.out.println("value of "+i+" smallest element: "+quickselect( ary1 , i ));
-    }
+    }*/
     System.out.println("\n------------------------------------------\n");
 
     // try on arrays from sizes 1 to 100, inclusive
@@ -61,7 +61,8 @@ public class Quick{
     }
     System.out.println("PASSED QUICKSELECT FOR EVERY ELEMENT!");
     //int[] ary2 = {9, -3, 5, 2, 6, 8, -6, 1, 3};
-    int[] ary2 = {0,0,0,0,0,1,0,0,0,0};
+    System.out.println("PARTITION DUTCH");
+    int[] ary2 = {-1,2,3,5,6,0,0,0,0,0,1,0,0,-1,2,3,4,4,4,4,4,5,0,4};
     partitionDutch(ary2, 0, ary2.length -1);
     System.out.println(Arrays.toString(ary2));
   }
@@ -105,9 +106,9 @@ public class Quick{
 /*  a - When choosing a pivot, use the median value of the lo,hi, and middle elements.
     b - When a data element is equal to the pivot, make a 50% chance that you swap it to the other
     */
-  private static int partitionDutch(int[] data,int lo, int hi){
+  public static int partitionDutch(int[] data,int lo, int hi){
     int mid = (lo + hi) / 2; // middle element index
-    //System.out.println("middle index: "+mid);
+    System.out.println("middle index: "+mid);
     int pivot = 0;
     // set pivot as the median value of lo,hi,mid elements
     if (data[lo] > data[hi] && data[lo] < data[mid]
@@ -122,64 +123,67 @@ public class Quick{
     ||  data[hi] < data[lo] && data[hi] > data[mid]){
       pivot = hi;
     }
-    //System.out.println("pivot index: "+pivot+": "+data[pivot]);
+    System.out.println("pivot: "+pivot);
+    int s = lo;
+    int e = hi;
 
-    int s = 0;
-    int s_add = 1; // Where to add from
-    int e = data.length-1;
-    // base case: if array is size 1, just return 0
-    if (data.length <= 1){
-      return 0;
+    if (lo == hi){
+      return lo; // if there's only one element, return the element
     }
-    // move pivot to the beginning of the array
-    if (s == 0){
-      int temp = data[0];
-      data[0] = data[pivot];
+
+    // move pivot to the beginning of the array part that's being sorted
+      int temp = data[lo];
+      data[lo] = data[pivot];
       data[pivot] = temp;
-      s = 1;
-    }
+      s++; // update loing index
+  //System.out.println("lo, hi, pivot: "+s+" "+e+" "+pivot);
+
+    //  System.out.println("PIVOT AT FRONT: "+Arrays.toString(data));
 
     while(s < e){
-      // if current element is greater than pivot element, move element to the right end
-      if (data[s] > data[0]){
+      Random rand = new Random();
+      int willChange = rand.nextInt(2);
+
+      // if current element is greater than pivot element, move element to the right hi
+      if (data[s] > data[lo]){
         int temp1 = data[e];
         data[e] = data[s];
         data[s] = temp1;
         e--;
       }
-      // 50% of putting to one side or another if element is equal to pivot
-      else if (data[s] == data[0]){
-        Random rand = new Random();
-        if (rand.nextInt(2) == 0){
-          int temp1 = data[e];
-          data[e] = data[s];
-          data[s] = temp1;
-          e--;
-        }
-        else{
-          s++;
-        }
-      }
-      // if current element is less than pivot element, move element to the left end
-      else if (data[s] < data[0]){
+      // if current element is less than pivot element, move the lo to the right
+      else if (data[s] < data[lo]){
         s++;
-
       }
+      else if (data[s] == data[lo]){
+        System.out.println("willChange value: "+ willChange);
+       if (willChange == 0){ // 50% chance of keeping element on left side
+         s++;
+       }
+       else if (willChange == 1){ // 50% chance of moving element to other side
+         int temp1 = data[e];
+         data[e] = data[s];
+         data[s] = temp1;
+         e--;
+       }
+       else{
+         System.out.println("Something is wrong: " + willChange);
+       }
+     }
     }
-
-      // find where the pivot element belongs and return the index
-      int index = 0;
-      if (data[0] < data[s]){
-        index = s - 1;
-      }
-      if (data[0] >= data[s]){
-        index = s;
-      }
-      int temp3 = data[index];
-      data[index] = data[0];
-      data[0] = temp3;
-    //  System.out.println("location of pivot element "+data[index]+": data["+index+"]");
-      return index;
+    // find where the pivot element belongs, place it in that position, and return the index
+    int index = 0;
+    if (data[lo] <= data[s]){
+      index = s - 1;
+    }
+    if (data[lo] > data[s]){
+      index = s;
+    }
+    int temp3 = data[index];
+    data[index] = data[lo];
+    data[lo] = temp3;
+    System.out.println("index to return: "+index);
+    return index;
 }
   /*Choose a random pivot element between the start and end index inclusive,
   Then modify the array such that:
