@@ -68,19 +68,21 @@ public class Quick{
   /*return the value that is the kth smallest value of the array.
   */
   public static int quickselect(int[] data, int k){
-    int tries = data.length * 500;
-    for (int i = 0; i < tries; i++){
+
       int index = partition(data, 0, data.length - 1);
-    //  System.out.println(Arrays.toString(data));
-      int numPivots = pivotNum(data, data[index]);
-      // System.out.println("index: "+index);
+
       // check if element is at desired index, otherwise call partition again
-      if ( (k > index - numPivots && k <= index)
-      ){
-        return data[index];
+      while (index != k){
+        // if index is to the left of desired element, partition the right side of the array
+        if (index < k){
+          index = partition(data, index, data.length - 1);
+        }else{
+          // if index is to the right of the desired element, partition the left side of the array
+          index = partition(data, 0, index);
+        }
       }
-    }
-    return -1; // should not reach this, but written in to compile
+
+    return data[index];
 
   }
 
@@ -188,7 +190,6 @@ public class Quick{
       data[pivot] = temp;
       s++;
 
-
     while(s < e){
       // if current element is greater than pivot element, move element to the right end
       if (data[s] > data[0]){
@@ -202,8 +203,7 @@ public class Quick{
         s++;
       }
     }
-    //   System.out.println(Arrays.toString(data));
-    // find where the pivot element belongs and return the index
+    // find where the pivot element belongs, place it in that position, and return the index
     int index = 0;
     if (data[0] < data[s]){
       index = s - 1;
@@ -217,16 +217,6 @@ public class Quick{
     return index;
   }
 
-  // find number of occurrences of the pivot value in the array
-  private static int pivotNum(int[] data, int pivotVal){
-    int pivotNums = 0;
-    for (int i = 0; i < data.length; i++){
-      if (pivotVal == data[i]){
-        pivotNums++;
-      }
-    }
-    return pivotNums;
-  }
 
 
 }
