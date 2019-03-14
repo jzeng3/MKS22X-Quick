@@ -62,7 +62,7 @@ public class Quick{
     System.out.println("PASSED QUICKSELECT FOR EVERY ELEMENT!");
     //int[] ary2 = {9, -3, 5, 2, 6, 8, -6, 1, 3};
     System.out.println("PARTITION DUTCH");
-    int[] ary2 = {9,-3,5,2,3,8,-6,1,6};
+    int[] ary2 = {9,-3,5,2,6,6,6,6,6,6,3,8,-6,1,6,6,6,6,6,6,6,6,6,6,6,6,6};
     //partitionDutch(ary2, 0, ary2.length -1);
     System.out.println(Arrays.toString(ary2));
     quicksort(ary2);
@@ -144,8 +144,7 @@ public class Quick{
     || data[mid] < data[hi] && data[mid] > data[lo]){
       pivot = mid;
     }
-    if (data[hi] > data[lo] && data[hi] < data[mid]
-    ||  data[hi] < data[lo] && data[hi] > data[mid]){
+    else{
       pivot = hi;
     }
 
