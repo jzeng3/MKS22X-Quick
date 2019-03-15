@@ -59,7 +59,7 @@ public class Quick{
   /*  a - When choosing a pivot, use the median value of the lo,hi, and middle elements.
   b - When a data element is equal to the pivot, make a 50% chance that you swap it to the other
   */
-  public static int partitionDutch(int[] data,int lo, int hi){
+  private static int partitionDutch(int[] data,int lo, int hi){
     if (lo == hi){
       return lo; // if there's only one element, return the element
     }
@@ -175,7 +175,7 @@ public class Quick{
   *4. all elements in range that are larger than the pivot element are placed after the pivot element.
   *@return the index of the final position of the pivot element.
   */
-  public static int partition(int[] data, int start, int end){
+  private static int partition(int[] data, int start, int end){
     Random rand = new Random();
     // pivot in range of start and end
     int pivot = Math.abs(rand.nextInt()) % (end - start + 1) + start;
