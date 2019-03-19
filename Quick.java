@@ -221,4 +221,35 @@ public class Quick{
     return index;
   }
 
+  // sorts array in increasing order
+ public static void insertionSort(int[] data){
+   if (data.length >= 2){
+     // loop through array, checking number at current index relative to previous numbers
+     for (int i = 0; i < data.length; i++){
+       // current number
+       int original = data[i];
+       int index = i-1;
+       //System.out.println("index " + index);
+      // inner loop checks if previous elements are greater than current element
+    //  System.out.println(original < data[index]);
+       while (index >= 0 && data[index] > original){
+         // System.out.println("In loop with " + original);
+         // store the previous number
+         int temp = data[index];
+         // System.out.println("temp value held is " + temp);
+        // if current num for outer loop is less than the previous number(s)
+             // previous number moves up a space
+             data[index+1] = temp;
+             // System.out.println("if: num at index " + (index+1) + " is now " + temp);
+             // current number will be put at a smaller index
+             index--;
+         }
+         // set element at index equal to current number (sorted)
+        // System.out.println("index of insertion " + (index));
+         data[index+1] = original;
+      //   System.out.println("Current array" + Arrays.toString(data));
+       }
+     }
+   }
+
 }
