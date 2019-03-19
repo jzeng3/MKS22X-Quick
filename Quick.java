@@ -80,12 +80,6 @@ public class Quick{
     }
   }
   //public static void main(String[]args){
-
-    /* int[] ary = {5,1,4,3,2,7};
-    //insertionSort(ary, 1,3);
-    quicksort(ary);
-    System.out.println(Arrays.toString(ary));*/
-
   /*  System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
     int[]MAX_LIST = {1000000000,500,10};
     for(int MAX : MAX_LIST){
