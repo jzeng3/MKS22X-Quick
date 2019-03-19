@@ -3,7 +3,10 @@ import java.io.*;
 
 public class Quick{
   public static void main(String[]args){
-    System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
+    int[] ary = {5,1,4,3,2,7};
+    insertionSort(ary, 1,4);
+    System.out.println(Arrays.toString(ary));
+  /*  System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
     int[]MAX_LIST = {1000000000,500,10};
     for(int MAX : MAX_LIST){
       for(int size = 31250; size < 2000001; size*=2){
@@ -35,7 +38,7 @@ public class Quick{
 
       }
       System.out.println();
-    }
+    }*/
   }
 
   /*Modify the array to be in increasing order.
@@ -222,32 +225,29 @@ public class Quick{
   }
 
   // sorts array in increasing order
- public static void insertionSort(int[] data){
-   if (data.length >= 2){
+ public static void insertionSort(int[] data, int lo, int hi){
+   if (hi - lo >= 2){
      // loop through array, checking number at current index relative to previous numbers
-     for (int i = 0; i < data.length; i++){
+     for (int i = lo; i <= hi; i++){
        // current number
        int original = data[i];
        int index = i-1;
-       //System.out.println("index " + index);
-      // inner loop checks if previous elements are greater than current element
-    //  System.out.println(original < data[index]);
-       while (index >= 0 && data[index] > original){
-         // System.out.println("In loop with " + original);
+
+       while (index >= lo && data[index] > original){
+
          // store the previous number
          int temp = data[index];
-         // System.out.println("temp value held is " + temp);
+
         // if current num for outer loop is less than the previous number(s)
              // previous number moves up a space
              data[index+1] = temp;
-             // System.out.println("if: num at index " + (index+1) + " is now " + temp);
+
              // current number will be put at a smaller index
              index--;
          }
          // set element at index equal to current number (sorted)
-        // System.out.println("index of insertion " + (index));
+
          data[index+1] = original;
-      //   System.out.println("Current array" + Arrays.toString(data));
        }
      }
    }
