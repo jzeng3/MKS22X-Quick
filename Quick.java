@@ -53,7 +53,7 @@ public class Quick{
     return ans;
   }
 
-  public static void main(String[]args){
+  /*public static void main(String[]args){
 
     if(args.length < 2)return;
 
@@ -69,7 +69,7 @@ public class Quick{
      * Test your sort here //yoursort(start);
      * Add code to switch which sort is tested by changing one of the args!
      */
-     quicksort(start);
+  /*   quicksort(start);
     long elapsedTime = System.currentTimeMillis() - startTime;
     if(Arrays.equals(start,result)){
       System.out.println("PASS Case "+name(type)+"\t array, size:"+start.length+"\t"+elapsedTime/1000.0+"sec ");
@@ -78,9 +78,9 @@ public class Quick{
       System.out.println(Arrays.toString(start));
       System.out.println(Arrays.toString(result));
     }
-  }
-  //public static void main(String[]args){
-  /*  System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
+  }*/
+  public static void main(String[]args){
+   System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
     int[]MAX_LIST = {1000000000,500,10};
     for(int MAX : MAX_LIST){
       for(int size = 31250; size < 2000001; size*=2){
@@ -112,8 +112,8 @@ public class Quick{
 
       }
       System.out.println();
-    }*/
-  //}
+    }
+  }
 
   /*Modify the array to be in increasing order.
   */
@@ -127,7 +127,7 @@ public class Quick{
       return; // end function if lo is greater than high
     }
     // call insertionSort if subsection of array is less than or equal to 30 elements
-    if (hi - lo <= 30){
+    if (hi - lo <= 14){
       insertionSort(data,lo,hi);
     }
     // otherwise record the pivot index
